@@ -20,32 +20,18 @@ const createNewsUser = async (email, password, username) => {
   }
 };
 const getUserList = async () => {
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "jwt2",
-    Promise: bluebird,
-  });
   try {
-    const [rows, fields] = await connection.execute("SELECT * FROM `user`");
-    return rows;
+    const user = await db.User.findAll();
+    return user;
   } catch (err) {
-    console.log("check: ", err);
+    console.log(">>>>>>.check erorr: ", err);
   }
 };
 let deleteUserVervice = async (id) => {
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "jwt2",
-    Promise: bluebird,
-  });
   try {
-    const [rows, fields] = await connection.execute(
-      "DELETE FROM user WHERE id = ?",
-      [id]
-    );
-    return rows;
+    await db.User.destroy({
+      where: { id: id },
+    });
   } catch (err) {
     console.log("check: ", err);
   }
