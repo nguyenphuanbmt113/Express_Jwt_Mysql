@@ -37,37 +37,33 @@ let deleteUserVervice = async (id) => {
   }
 };
 const updateUserById = async (userId) => {
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "jwt2",
-    Promise: bluebird,
-  });
   try {
-    const [rows, fields] = await connection.execute(
-      "select * from user WHERE id = ?",
-      [userId]
-    );
-    return rows;
+    const userpage = await db.User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+    console.log("check userpage:", userpage);
+    return userpage;
   } catch (e) {
     console.log("check err:", e);
   }
 };
 const updateDataUser = async (email, username, id) => {
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    database: "jwt2",
-    Promise: bluebird,
-  });
   try {
-    const [rows, fields] = await connection.execute(
-      "update user set email = ?, username = ? where id = ?",
-      [email, username, id]
+    await db.User.update(
+      {
+        email: email,
+        username: username,
+      },
+      {
+        where: {
+          id: id,
+        },
+      }
     );
-    return rows;
   } catch (e) {
-    console.log("check err:", e);
+    console.log(">>>>>>>>>>>>>>check err:", e);
   }
 };
 module.exports = {
