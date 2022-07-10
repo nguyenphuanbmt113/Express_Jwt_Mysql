@@ -17,6 +17,13 @@ const handleRegister = async (req, res) => {
         DT: "",
       });
     }
+    if (password && password.length < 3) {
+      return res.status(200).json({
+        EM: "your password must have more than 3 letter",
+        EC: 1,
+        DT: "",
+      });
+    }
     //call serviceuser
     const createUser = await apiUserservice.createUserService(req.body);
     console.log(">>>>>check create User: ", createUser);
