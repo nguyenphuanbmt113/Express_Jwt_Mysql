@@ -1,4 +1,5 @@
 import apiUserservice from "../service/apiUserService";
+import bcrypt from "bcryptjs";
 const handleApi = (req, res) => {
   return res.status(200).json({
     message: "oh",
@@ -41,12 +42,24 @@ const handleRegister = async (req, res) => {
     });
   }
 };
+
+//login
 const handleLoginUser = async (req, res) => {
-  console.log(">>>check handleLogin: ", req.body);
-  return res.status(200).json({
-    ms: "ok!handle",
-    data: "",
-  });
+  try {
+    let data = await apiUserservice.handleUserLoginService(req.body);
+    return res.status(200).json({
+      EM: data.EM,
+      EC: data.EC,
+      DT: data.DT,
+    }); //api tra về
+  } catch (er) {
+    console.log(">>>>>check er: ", er);
+    return {
+      EM: "something wrongs in service",
+      EC: -2,
+    };
+  }
+  //handleLogic
 };
 module.exports = {
   handleApi,
