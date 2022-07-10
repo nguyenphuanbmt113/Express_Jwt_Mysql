@@ -1,6 +1,7 @@
 import express from "express";
 import configViewEngine from "./config/viewEngine";
 import initWebRoute from "./route/web";
+import initApiRoute from "./route/apiWeb";
 import configBodyParse from "./config/configBodyParse";
 import connection from "./config/connectDB";
 import configCORS from "./config/configCORS";
@@ -17,6 +18,8 @@ configBodyParse(app);
 configViewEngine(app);
 //init webrouter
 initWebRoute(app);
+//init api router
+initApiRoute(app);
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
